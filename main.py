@@ -2,8 +2,12 @@ from matplotlib import pyplot as plt
 from skimage.measure import profile_line
 from skimage.io import imread
 from sklearn import preprocessing
+from tkinter import *
+from tkinter import filedialog
+import matplotlib as mp
 import numpy as np
 
+mp.use("TkAgg")
 image = imread('with2.bmp') #Read the images
 
 start = (0, 0) #Start of the profile line
@@ -49,13 +53,41 @@ print(' Roll-off along red line: ', profile_rolloff)
 
 
 ax[1].plot(profile_norm)
+# these are matplotlib.patch.Patch properties
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+textstr = '\n'.join((
+    r'$\mathrm{cv: }=%.2f$' % (profile_cv, ),
+    r'$\mathrm{uniformity: }=%.2f$' % (profile_uni, ),
+    r'$\mathrm{rolloff: }=%.2f$' % (profile_rolloff, )))
+#textstr = '\n'.join((' CV: ' % (str(profile_cv) ), ' Uniformity: ' %(str(profile_uni) ) , ' Roll-off along red line: ' %(str(profile_rolloff ))))
+# place a text box in upper left in axes coords
+ax[1].text(0.05, 0.3, textstr,  fontsize=14,
+        verticalalignment='top', bbox=props)
+
 ax[1].set_ylabel('Intensity')
 ax[1].set_xlabel('Pixels')
 ax[1].grid()
 
 title_name = 'Check status:' + title_name + ' BPN:' + str(counter) + ' CV: '
 ax[1].set_title(title_name)
+
 plt.show()
+
+def openFile():
+    filepath = filedialog.askopenfilename(initialdir="C:\\Users\\Cakow\\PycharmProjects\\Main",
+                                          title="Open file okay?",
+                                          filetypes= (("text files","*.txt"),
+                                          ("all files","*.*")))
+    file = open(filepath,'r')
+    print(file.read())
+    file.close()
+
+window = Tk()
+button = Button(text="Open",command=openFile)
+button.pack()
+window.mainloop()
+
+
 
 
 #check range
