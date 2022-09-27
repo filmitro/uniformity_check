@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import tkinter
 from tkinter import filedialog as fd
 from skimage.measure import profile_line
@@ -122,3 +123,4 @@ button1.pack(side=tkinter.BOTTOM)
 tkinter.mainloop()
 # If you put root.destroy() here, it will cause an error if the window is
 # closed with the window manager.
+input()
